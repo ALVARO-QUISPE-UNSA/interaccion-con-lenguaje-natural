@@ -1,0 +1,38 @@
+{% extends 'viviendas/base.html' %}
+{% load static %}
+
+{% block title %}Consulta de Viviendas{% endblock %}
+
+{% block content %}
+<form method="POST" action="">
+  {% csrf_token %}
+  <label for="consulta">Consulta:</label>
+  {{ form.consulta }}
+  <button type="submit">Buscar</button>
+</form>
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+{% if resultados %}
+<h2>Resultados:</h2>
+<table>
+  <tr>
+    <th>Tipo</th>
+    <th>Zona</th>
+    <th>Precio</th>
+    <th>Extras</th>
+  </tr>
+  {% for vivienda in resultados %}
+  <tr>
+    <td>{{ vivienda.tipo }}</td>
+    <td>{{ vivienda.zona }}</td>
+    <td>{{ vivienda.precio }}</td>
+    <td>{{ vivienda.extras }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
+
