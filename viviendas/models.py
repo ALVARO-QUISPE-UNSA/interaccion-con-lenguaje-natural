@@ -12,6 +12,9 @@ class Vivienda(models.Model):
     extras = models.CharField(max_length=255)
     foto_url = models.URLField()
 
+    def __str__(self):
+        return f"{self.tipo}, zn: {self.zona}, extras: {self.extras}, N° dorm: {self.ndormitorios}"
+
 class LNPatron(models.Model):
     patron = models.CharField(max_length=255)
     consultasql = models.CharField(max_length=255)
@@ -20,4 +23,7 @@ class LNDiccionario(models.Model):
     patron = models.CharField(max_length=50)
     campo = models.CharField(max_length=50)
     condicion = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return f"patron: {self.patron}, campo: {self.campo}, condicion: {self.condicion}"
 

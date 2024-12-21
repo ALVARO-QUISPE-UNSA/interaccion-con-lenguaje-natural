@@ -16,8 +16,10 @@ def consulta_view(request):
         if form.is_valid():
             sql_query = make_query(str(form.cleaned_data['consulta']).lower())
             if sql_query:
-                print(f"\033[31m{sql_query}\033[0m")
                 resultados = Vivienda.objects.raw(sql_query)
+                for e in resultados: print(e)
+                if len(resultados) == 0:
+                    error = "No se encontraron resultados"
             else: 
                 error = "No se encontraron resultados para la consulta"
 
@@ -37,13 +39,13 @@ def make_query(consulta: str) -> str:
             condicion = str( entry.condicion )
             if "%s" in condicion:
                 condicion = condicion.replace("%s", match.group(1))
-                filtros.append(f"{campo} {condicion}")
+            filtros.append(f"{campo} {condicion}")
         else:
             valor = match.group(1)
             if campo == "ndormitorios":
                 filtros.append(f"{campo} = {valor}")
             else: 
-                filtros.append(f"{campo} = '{valor}'")
+                filtros.append(f"{campo} LIKE '%{valor}%'")
 
     if not filtros: return ""
     query = "SELECT * FROM viviendas_vivienda WHERE " + " AND ".join(filtros)
