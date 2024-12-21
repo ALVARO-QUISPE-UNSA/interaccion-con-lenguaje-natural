@@ -9,23 +9,18 @@ def consulta_view(request):
     resultados = None
     error = None
 
-    if request.method == 'POST':
-        form = ConsultaForm(request.POST)
-        if form.is_valid():
-            consulta = str( form.cleaned_data['consulta'] ).lower()
-            patrones = LNPatron.objects.all()
-
-            for patron in patrones:
-                if patron.patron in consulta:
-                    sql = patron.consultasql
-                    viviendas = Vivienda.objects.raw(sql)
-                    resultados = viviendas
-                    break
-            else:
-                error = "No se encontraron resultados para la consulta."
+    #if request.method == 'POST':
+    #    form = ConsultaForm(request.POST)
+    #    if form.is_valid():
+    #        sql = make_query(str( form.cleaned_data['consulta'] ).lower())
+    #        viviendas = Vivienda.objects.raw(sql)
 
     return render(request, 'viviendas/consulta.html', {
         'form': form,
         'resultados': resultados,
         'error': error
     })
+
+def make_query(str: str) -> str:
+
+    return ""

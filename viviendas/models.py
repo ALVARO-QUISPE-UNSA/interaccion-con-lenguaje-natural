@@ -17,5 +17,7 @@ class LNPatron(models.Model):
     consultasql = models.CharField(max_length=255)
 
 class LNDiccionario(models.Model):
-    palabra = models.CharField(max_length=50)
+    patron = models.CharField(max_length=50)
+    campo = models.CharField(max_length=50)
+    condicion = models.CharField(max_length=50, null=True, blank=True)
 
