@@ -46,5 +46,5 @@ def make_query(consulta: str) -> str:
                 filtros.append(f"{campo} = '{valor}'")
 
     if not filtros: return ""
-    query = "SELECT * FROM viviendas WHERE " + "AND".join(filtros)
+    query = "SELECT * FROM viviendas_vivienda WHERE " + " AND ".join(filtros)
     return query
