@@ -11,11 +11,15 @@ def consulta_view(request):
     resultados = None
     error = None
 
-    #if request.method == 'POST':
-    #    form = ConsultaForm(request.POST)
-    #    if form.is_valid():
-    #        sql = make_query(str( form.cleaned_data['consulta'] ).lower())
-    #        viviendas = Vivienda.objects.raw(sql)
+    if request.method == 'POST':
+        form = ConsultaForm(request.POST)
+        if form.is_valid():
+            sql_query = make_query(str(form.cleaned_data['consulta']).lower())
+            if sql_query:
+                print(f"\033[31m{sql_query}\033[0m")
+                resultados = Vivienda.objects.raw(sql_query)
+            else: 
+                error = "No se encontraron resultados para la consulta"
 
     return render(request, 'viviendas/consulta.html', {
         'form': form,
